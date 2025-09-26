@@ -197,7 +197,7 @@ export default function ServicesPage() {
           </h2>
           <p className="text-xl text-gray-800 mb-8 max-w-2xl mx-auto">
             Contact us today for a free estimate on your electrical project. 
-            We're here to help power your future.
+            We&apos;re here to help power your future.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a

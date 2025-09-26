@@ -35,12 +35,12 @@ export default function AboutPage() {
                 our customers could trust.
               </p>
               <p className="text-lg text-gray-600 mb-6">
-                Over the years, we've grown from a one-man operation to a team of skilled 
-                electricians, but we've never lost sight of our core values: quality workmanship, 
+                Over the years, we&apos;ve grown from a one-man operation to a team of skilled 
+                electricians, but we&apos;ve never lost sight of our core values: quality workmanship, 
                 honest pricing, and exceptional customer service.
               </p>
               <p className="text-lg text-gray-600">
-                Today, we're proud to serve thousands of satisfied customers throughout the 
+                Today, we&apos;re proud to serve thousands of satisfied customers throughout the 
                 region, handling everything from simple outlet installations to complex 
                 commercial electrical systems.
               </p>
@@ -49,7 +49,7 @@ export default function AboutPage() {
               <h3 className="text-2xl font-bold text-gray-900 mb-6">Our Mission</h3>
               <p className="text-gray-600 mb-4">
                 To provide safe, reliable, and professional electrical services that exceed 
-                our customers' expectations while maintaining the highest standards of 
+                our customers&apos; expectations while maintaining the highest standards of 
                 quality and integrity.
               </p>
               <h3 className="text-2xl font-bold text-gray-900 mb-4 mt-8">Our Values</h3>
@@ -175,7 +175,7 @@ export default function AboutPage() {
               <div className="w-16 h-16 bg-yellow-500 rounded-lg flex items-center justify-center mx-auto mb-4">
                 <span className="text-white text-2xl">🏆</span>
               </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">Angie's List</h3>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">Angie&apos;s List</h3>
               <p className="text-gray-600">Super Service Award</p>
             </div>
           </div>

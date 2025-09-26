@@ -72,7 +72,7 @@ export default function Home() {
                 Why Choose Horsepower Electric?
               </h2>
               <p className="text-lg text-gray-600 mb-8">
-                With over 15 years of experience in the electrical industry, we've built a 
+                With over 15 years of experience in the electrical industry, we&apos;ve built a 
                 reputation for excellence, reliability, and customer satisfaction.
               </p>
               
