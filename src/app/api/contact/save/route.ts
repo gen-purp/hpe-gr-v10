@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { addContact } from '@/lib/contactStore';
 
 export async function POST(request: NextRequest) {
   try {
@@ -11,27 +12,26 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // For now, we'll return success and log the submission
-    // In a production environment, you would:
-    // 1. Use the Supabase client with proper authentication
-    // 2. Or implement a direct database connection
-    // 3. Or use the MCP connection to save to the database
-    
-    console.log('Contact form submission:', {
+    // Create a new contact submission
+    const newSubmission = {
+      id: `contact_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
       name,
       email,
-      phone: phone || 'Not provided',
-      service: service || 'Not specified',
+      phone: phone || undefined,
+      service: service || undefined,
       message,
-      timestamp: new Date().toISOString()
-    });
+      status: 'new' as const,
+      created_at: new Date().toISOString()
+    };
 
-    // Generate a unique ID for the submission
-    const submissionId = `contact_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    // Add to our shared store
+    addContact(newSubmission);
+    
+    console.log('Contact form submission saved:', newSubmission);
 
     return NextResponse.json({
       success: true,
-      id: submissionId,
+      id: newSubmission.id,
       message: 'Contact form submitted successfully. We will get back to you soon!'
     });
 
