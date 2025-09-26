@@ -7,17 +7,18 @@ import Footer from '@/components/Footer';
 
 export default function AdminDashboard() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [adminEmail, setAdminEmail] = useState('');
+  const [adminName, setAdminName] = useState('');
   const router = useRouter();
 
   useEffect(() => {
     // Check if admin is logged in
     const loggedIn = localStorage.getItem('adminLoggedIn');
     const email = localStorage.getItem('adminEmail');
+    const name = localStorage.getItem('adminName');
     
     if (loggedIn === 'true' && email) {
       setIsAuthenticated(true);
-      setAdminEmail(email);
+      setAdminName(name || email);
     } else {
       router.push('/admin/login');
     }
@@ -26,6 +27,8 @@ export default function AdminDashboard() {
   const handleLogout = () => {
     localStorage.removeItem('adminLoggedIn');
     localStorage.removeItem('adminEmail');
+    localStorage.removeItem('adminName');
+    localStorage.removeItem('adminRole');
     router.push('/admin/login');
   };
 
@@ -49,7 +52,7 @@ export default function AdminDashboard() {
           <div className="flex justify-between items-center">
             <div>
               <h1 className="text-3xl font-bold text-gray-900">Admin Dashboard</h1>
-              <p className="text-gray-600">Welcome back, {adminEmail}</p>
+              <p className="text-gray-600">Welcome back, {adminName}</p>
             </div>
             <button
               onClick={handleLogout}

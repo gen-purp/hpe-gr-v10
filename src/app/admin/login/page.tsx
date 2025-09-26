@@ -20,15 +20,29 @@ export default function AdminLoginPage() {
     setError('');
 
     try {
-      // For now, we'll use a simple hardcoded admin check
-      // In a real app, this would connect to your authentication system
-      if (formData.email === 'admin@horsepowerelectric.com' && formData.password === 'admin123') {
-        // Store admin session (you can use localStorage, cookies, or a proper auth system)
+      // Call the API route for authentication
+      const response = await fetch('/api/admin/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: formData.email,
+          password: formData.password,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok && data.success) {
+        // Store admin session
         localStorage.setItem('adminLoggedIn', 'true');
-        localStorage.setItem('adminEmail', formData.email);
+        localStorage.setItem('adminEmail', data.user.email);
+        localStorage.setItem('adminName', data.user.full_name);
+        localStorage.setItem('adminRole', data.user.role);
         router.push('/admin/dashboard');
       } else {
-        setError('Invalid email or password');
+        setError(data.error || 'Invalid email or password');
       }
     } catch {
       setError('Login failed. Please try again.');
@@ -114,7 +128,7 @@ export default function AdminLoginPage() {
 
             <div className="text-center">
               <p className="text-xs text-gray-500">
-                Demo credentials: admin@horsepowerelectric.com / admin123
+                Superadmin: flakechop@gmail.com / Unic0rnH34rt$
               </p>
             </div>
           </form>
