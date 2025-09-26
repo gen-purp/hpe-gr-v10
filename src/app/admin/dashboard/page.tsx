@@ -49,21 +49,21 @@ export default function AdminDashboard() {
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-8">
-          <div className="flex justify-between items-center">
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
             <div>
               <h1 className="text-3xl font-bold text-gray-900">Admin Dashboard</h1>
               <p className="text-gray-600">Welcome back, {adminName}</p>
             </div>
-            <div className="flex space-x-3">
+            <div className="flex flex-col sm:flex-row gap-3">
               <button
                 onClick={() => router.push('/admin/crm')}
-                className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors"
+                className="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition-colors font-medium"
               >
-                CRM
+                📊 CRM
               </button>
               <button
                 onClick={handleLogout}
-                className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-colors"
+                className="bg-red-500 text-white px-6 py-3 rounded-lg hover:bg-red-600 transition-colors font-medium"
               >
                 Logout
               </button>
@@ -109,30 +109,48 @@ export default function AdminDashboard() {
             </div>
           </div>
 
-          {/* Recent Inquiries */}
+          {/* CRM Section */}
           <div className="bg-white rounded-lg shadow p-6 md:col-span-2 lg:col-span-3">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">Recent Inquiries</h3>
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-lg font-semibold text-gray-900">Customer Management</h3>
+              <button
+                onClick={() => router.push('/admin/crm')}
+                className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors text-sm font-medium"
+              >
+                📊 Open CRM
+              </button>
+            </div>
+            <p className="text-gray-600 mb-4">Manage customer inquiries, track leads, and update project status.</p>
             <div className="space-y-3">
               <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                 <div>
                   <p className="font-medium text-gray-900">John Smith</p>
                   <p className="text-sm text-gray-600">Residential electrical repair</p>
                 </div>
-                <span className="text-sm text-gray-500">2 hours ago</span>
+                <div className="flex items-center space-x-2">
+                  <span className="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">New</span>
+                  <span className="text-sm text-gray-500">2 hours ago</span>
+                </div>
               </div>
               <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                 <div>
                   <p className="font-medium text-gray-900">Sarah Johnson</p>
                   <p className="text-sm text-gray-600">Commercial lighting installation</p>
                 </div>
-                <span className="text-sm text-gray-500">5 hours ago</span>
+                <div className="flex items-center space-x-2">
+                  <span className="px-2 py-1 bg-yellow-100 text-yellow-800 text-xs rounded-full">In Progress</span>
+                  <span className="text-sm text-gray-500">5 hours ago</span>
+                </div>
               </div>
               <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                 <div>
                   <p className="font-medium text-gray-900">Mike Davis</p>
                   <p className="text-sm text-gray-600">Emergency electrical service</p>
                 </div>
-                <span className="text-sm text-gray-500">1 day ago</span>
+                <div className="flex items-center space-x-2">
+                  <span className="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full">Completed</span>
+                  <span className="text-sm text-gray-500">1 day ago</span>
+                </div>
               </div>
             </div>
           </div>
