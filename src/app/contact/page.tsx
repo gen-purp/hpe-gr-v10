@@ -21,7 +21,7 @@ export default function ContactPage() {
     setError('');
 
     try {
-      const response = await fetch('/api/contact/submit', {
+      const response = await fetch('/api/contact/save', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

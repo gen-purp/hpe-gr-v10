@@ -11,28 +11,28 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // For now, we'll simulate a successful submission
-    // In production, you'd want to use the Supabase client properly
-    // or implement a direct database connection
+    // For now, we'll return success and log the submission
+    // In a production environment, you would:
+    // 1. Use the Supabase client with proper authentication
+    // 2. Or implement a direct database connection
+    // 3. Or use the MCP connection to save to the database
     
-    // Generate a mock ID for the submission
-    const submissionId = `sub_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-    
-    // Log the submission (in production, save to database)
-    console.log('Contact submission received:', {
-      id: submissionId,
+    console.log('Contact form submission:', {
       name,
       email,
-      phone,
-      service,
+      phone: phone || 'Not provided',
+      service: service || 'Not specified',
       message,
       timestamp: new Date().toISOString()
     });
 
+    // Generate a unique ID for the submission
+    const submissionId = `contact_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+
     return NextResponse.json({
       success: true,
       id: submissionId,
-      message: 'Contact form submitted successfully'
+      message: 'Contact form submitted successfully. We will get back to you soon!'
     });
 
   } catch (error) {

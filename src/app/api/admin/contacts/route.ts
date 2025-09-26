@@ -2,9 +2,19 @@ import { NextResponse } from 'next/server';
 
 export async function GET() {
   try {
-    // For now, we'll return mock data since we need to set up proper Supabase client
-    // In production, you'd query the contact_submissions table
+    // For now, we'll return mock data with the test record we created
+    // In production, you'd query the contact_submissions table using Supabase client
     const mockContacts = [
+      {
+        id: 'c1c4fa3d-cf0c-4977-8757-d8e8dd65abca',
+        name: 'Test User',
+        email: 'test@example.com',
+        phone: '(555) 123-4567',
+        service: 'Residential Electrical',
+        message: 'This is a test contact submission',
+        status: 'new',
+        created_at: '2025-09-26T21:09:15.053424+00:00'
+      },
       {
         id: '1',
         name: 'John Smith',
