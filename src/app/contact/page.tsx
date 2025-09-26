@@ -12,12 +12,42 @@ export default function ContactPage() {
     service: '',
     message: ''
   });
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission here
-    console.log('Form submitted:', formData);
-    alert('Thank you for your message! We will contact you soon.');
+    setIsLoading(true);
+    setError('');
+
+    try {
+      const response = await fetch('/api/contact/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (response.ok && data.success) {
+        alert('Thank you for your message! We will contact you soon.');
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          service: '',
+          message: ''
+        });
+      } else {
+        setError(data.error || 'Failed to submit form. Please try again.');
+      }
+    } catch {
+      setError('Failed to submit form. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -138,12 +168,19 @@ export default function ContactPage() {
                     placeholder="Please describe your electrical project or issue..."
                   />
                 </div>
+
+                {error && (
+                  <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-md text-sm">
+                    {error}
+                  </div>
+                )}
                 
                 <button
                   type="submit"
-                  className="w-full bg-yellow-500 text-white py-4 rounded-lg hover:bg-yellow-600 transition-colors font-medium text-lg"
+                  disabled={isLoading}
+                  className="w-full bg-yellow-500 text-white py-4 rounded-lg hover:bg-yellow-600 transition-colors font-medium text-lg disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Send Message
+                  {isLoading ? 'Sending...' : 'Send Message'}
                 </button>
               </form>
             </div>
