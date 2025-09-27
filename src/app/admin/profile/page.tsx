@@ -83,7 +83,7 @@ export default function ProfilePage() {
       console.log('Admin ID:', adminId);
       console.log('=====================');
       
-      const response = await fetch('/api/admin/profile-update', {
+      const response = await fetch('/api/admin/profile-simple', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -126,7 +126,7 @@ export default function ProfilePage() {
       }
     } catch (error) {
       console.error('Frontend error:', error);
-      setMessage(`Failed to update. Error: ${error.message}`);
+      setMessage(`Failed to update. Error: ${error instanceof Error ? error.message : 'Unknown error'}`);
     } finally {
       setIsLoading(false);
     }
