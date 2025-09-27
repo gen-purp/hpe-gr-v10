@@ -62,6 +62,12 @@ export default function AdminDashboard() {
                 📊 CRM
               </button>
               <button
+                onClick={() => router.push('/admin/profile')}
+                className="bg-green-500 text-white px-6 py-3 rounded-lg hover:bg-green-600 transition-colors font-medium"
+              >
+                👤 Profile Details
+              </button>
+              <button
                 onClick={handleLogout}
                 className="bg-red-500 text-white px-6 py-3 rounded-lg hover:bg-red-600 transition-colors font-medium"
               >
