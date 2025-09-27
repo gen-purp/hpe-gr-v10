@@ -4,7 +4,7 @@ import { createClient } from '@supabase/supabase-js';
 export async function GET() {
   try {
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://bfplxzqbwthmnqynkzbe.supabase.co';
-    const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJmcGx4enFid3RobW5xeW5remJlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mjc0MzU1MjgsImV4cCI6MjA0MzAxMTUyOH0.gHqUPgEJPeYQHfHD-a_NkBbGqOvKgUqIYWKGqTYdFDw';
+    const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJmcGx4enFid3RobW5xeW5remJlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mjc0MzU1MjgsImV4cCI6MjA0MzAxMTUyOH0.gHqUPgEJPeYQHfHD-a_NkBbGqOvKgUqIYWKGqTYdFDw';
     
     console.log('Testing Supabase connection...');
     console.log('URL:', supabaseUrl);
