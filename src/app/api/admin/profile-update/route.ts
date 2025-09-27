@@ -76,6 +76,8 @@ export async function PUT(request: NextRequest) {
     }
 
     console.log('Updating database with:', field === 'password' ? { ...updateData, password_hash: '[HIDDEN]' } : updateData);
+    console.log('Supabase client status:', supabase ? 'Connected' : 'Not connected');
+    console.log('Supabase URL:', supabaseUrl);
 
     // Execute the database update
     const { data, error } = await supabase
