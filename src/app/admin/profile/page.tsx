@@ -76,7 +76,7 @@ export default function ProfilePage() {
     setMessage('');
 
     try {
-      const response = await fetch('/api/admin/profile-update', {
+      const response = await fetch('/api/debug-profile', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

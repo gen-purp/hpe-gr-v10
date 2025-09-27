@@ -15,7 +15,13 @@ try {
 
 export async function PUT(request: NextRequest) {
   try {
+    console.log('=== PROFILE UPDATE API CALLED ===');
+    console.log('Timestamp:', new Date().toISOString());
+    console.log('Supabase client available:', !!supabase);
+    console.log('===============================');
+    
     if (!supabase) {
+      console.log('ERROR: Supabase client not available');
       return NextResponse.json(
         { error: 'Database connection not available' },
         { status: 500 }
