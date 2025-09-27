@@ -76,6 +76,13 @@ export default function ProfilePage() {
     setMessage('');
 
     try {
+      console.log('=== FRONTEND DEBUG ===');
+      console.log('Making API call to /api/admin/profile-update');
+      console.log('Field:', field);
+      console.log('Value:', editValue);
+      console.log('Admin ID:', adminId);
+      console.log('=====================');
+      
       const response = await fetch('/api/admin/profile-update', {
         method: 'PUT',
         headers: {
@@ -89,7 +96,11 @@ export default function ProfilePage() {
         }),
       });
 
+      console.log('Response status:', response.status);
+      console.log('Response ok:', response.ok);
+      
       const data = await response.json();
+      console.log('Response data:', data);
 
       if (data.success) {
         // Update the profile data
@@ -113,8 +124,9 @@ export default function ProfilePage() {
       } else {
         setMessage(data.error || 'Failed to update. Please try again.');
       }
-    } catch {
-      setMessage('Failed to update. Please try again.');
+    } catch (error) {
+      console.error('Frontend error:', error);
+      setMessage(`Failed to update. Error: ${error.message}`);
     } finally {
       setIsLoading(false);
     }
