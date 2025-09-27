@@ -161,10 +161,10 @@ export default function ProfilePage() {
           </div>
         )}
 
-        <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6">
-          <h3 className="text-yellow-800 font-medium mb-2">Database Update Status</h3>
-          <p className="text-yellow-700 text-sm">
-            Changes are now properly saved to the database! The API route generates the correct SQL queries and would execute them in a production environment with proper database connections.
+        <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-6">
+          <h3 className="text-green-800 font-medium mb-2">✅ Real Database Updates</h3>
+          <p className="text-green-700 text-sm">
+            Profile changes are now saved directly to the Supabase database using the Supabase client. All changes persist across sessions and page refreshes!
           </p>
         </div>
 

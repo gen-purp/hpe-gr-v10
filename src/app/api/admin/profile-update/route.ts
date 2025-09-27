@@ -1,7 +1,27 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { createClient } from '@supabase/supabase-js';
+
+// Initialize Supabase client with fallbacks
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://bfplxzqbwthmnqynkzbe.supabase.co';
+const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJmcGx4enFid3RobW5xeW5remJlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mjc0MzU1MjgsImV4cCI6MjA0MzAxMTUyOH0.gHqUPgEJPeYQHfHD-a_NkBbGqOvKgUqIYWKGqTYdFDw';
+
+let supabase: ReturnType<typeof createClient> | null = null;
+
+try {
+  supabase = createClient(supabaseUrl, supabaseServiceKey);
+} catch (error) {
+  console.error('Failed to initialize Supabase client:', error);
+}
 
 export async function PUT(request: NextRequest) {
   try {
+    if (!supabase) {
+      return NextResponse.json(
+        { error: 'Database connection not available' },
+        { status: 500 }
+      );
+    }
+
     const { field, value, currentPassword, adminId } = await request.json();
 
     if (!field || !value) {
@@ -25,10 +45,9 @@ export async function PUT(request: NextRequest) {
       timestamp: new Date().toISOString()
     });
 
-    let updateQuery = '';
-    let queryParams: (string | number)[] = [];
+    const updateData: Record<string, string> = { updated_at: new Date().toISOString() };
 
-    // Build the appropriate update query based on the field
+    // Build the appropriate update data based on the field
     if (field === 'password') {
       if (!currentPassword) {
         return NextResponse.json(
@@ -41,16 +60,13 @@ export async function PUT(request: NextRequest) {
       const crypto = await import('crypto');
       const hashedPassword = crypto.createHash('sha256').update(value).digest('hex');
       
-      updateQuery = `UPDATE admin_users SET password_hash = $1, updated_at = now() WHERE id = $2`;
-      queryParams = [hashedPassword, adminId];
+      updateData.password_hash = hashedPassword;
       
     } else if (field === 'full_name') {
-      updateQuery = `UPDATE admin_users SET full_name = $1, updated_at = now() WHERE id = $2`;
-      queryParams = [value, adminId];
+      updateData.full_name = value;
       
     } else if (field === 'email') {
-      updateQuery = `UPDATE admin_users SET email = $1, updated_at = now() WHERE id = $2`;
-      queryParams = [value, adminId];
+      updateData.email = value;
       
     } else {
       return NextResponse.json(
@@ -59,22 +75,30 @@ export async function PUT(request: NextRequest) {
       );
     }
 
-    console.log('Database update query:', updateQuery);
-    console.log('Query parameters:', field === 'password' ? ['[HIDDEN]', adminId] : queryParams);
+    console.log('Updating database with:', field === 'password' ? { ...updateData, password_hash: '[HIDDEN]' } : updateData);
 
-    // In a real production environment, you would execute the query here
-    // For this demo, we'll simulate the database update
-    // const result = await executeQuery(updateQuery, queryParams);
+    // Execute the database update
+    const { data, error } = await supabase
+      .from('admin_users')
+      .update(updateData)
+      .eq('id', adminId)
+      .select();
 
-    // Simulate processing time
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    if (error) {
+      console.error('Database update error:', error);
+      return NextResponse.json(
+        { error: 'Failed to update database' },
+        { status: 500 }
+      );
+    }
+
+    console.log('Database update successful:', data);
 
     return NextResponse.json({
       success: true,
       message: `${field === 'full_name' ? 'Full Name' : field === 'email' ? 'Email' : 'Password'} updated successfully in database`,
       updatedField: field,
       newValue: field === 'password' ? '[HIDDEN]' : value,
-      query: updateQuery,
       timestamp: new Date().toISOString()
     });
 
