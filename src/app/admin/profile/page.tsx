@@ -14,7 +14,6 @@ interface ProfileData {
 export default function ProfilePage() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [adminName, setAdminName] = useState('');
-  const [adminEmail, setAdminEmail] = useState('');
   const [adminId, setAdminId] = useState('');
   const [profileData, setProfileData] = useState<ProfileData>({
     full_name: '',
@@ -36,7 +35,6 @@ export default function ProfilePage() {
     if (loggedIn === 'true' && email) {
       setIsAuthenticated(true);
       setAdminName(name || email);
-      setAdminEmail(email);
       
       // Set admin ID (using the known superadmin ID)
       setAdminId('04333436-56fe-46ec-9b34-3012c4c69e73');
@@ -48,8 +46,8 @@ export default function ProfilePage() {
         password: '••••••••••••' // Hidden password
       });
       
-      // Use the variables to avoid linting warnings
-      console.log('Admin logged in:', { adminName: name, adminEmail: email });
+          // Use the variables to avoid linting warnings
+          console.log('Admin logged in:', { adminName: name });
     } else {
       router.push('/admin/login');
     }
@@ -113,10 +111,9 @@ export default function ProfilePage() {
         if (field === 'full_name') {
           localStorage.setItem('adminName', editValue);
           setAdminName(editValue);
-        } else if (field === 'email') {
-          localStorage.setItem('adminEmail', editValue);
-          setAdminEmail(editValue);
-        }
+            } else if (field === 'email') {
+              localStorage.setItem('adminEmail', editValue);
+            }
 
         setMessage(data.message);
         setEditingField(null);
