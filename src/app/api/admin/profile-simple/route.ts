@@ -1,20 +1,29 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { updateAdminProfile } from '@/actions/admin-actions';
 
 export async function PUT(request: NextRequest) {
   try {
     const { field, value, adminId } = await request.json();
 
-    console.log('Simple profile update:', { field, value, adminId });
+    console.log('Profile update request:', { field, value, adminId });
 
-    // For now, just return success without database update
-    // This will help us test if the API is being called
-    return NextResponse.json({
-      success: true,
-      message: `${field} updated successfully (test mode)`,
-      updatedField: field,
-      newValue: value,
-      timestamp: new Date().toISOString()
-    });
+    // Use the server action to update the database
+    const updateResult = await updateAdminProfile(adminId, field, value);
+
+    if (updateResult.success) {
+      return NextResponse.json({
+        success: true,
+        message: updateResult.message,
+        updatedField: field,
+        newValue: value,
+        timestamp: new Date().toISOString()
+      });
+    } else {
+      return NextResponse.json({
+        success: false,
+        error: updateResult.error || 'Failed to update database'
+      }, { status: 500 });
+    }
 
   } catch (error) {
     console.error('Profile update error:', error);

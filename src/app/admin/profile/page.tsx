@@ -83,7 +83,7 @@ export default function ProfilePage() {
       console.log('Admin ID:', adminId);
       console.log('=====================');
       
-      const response = await fetch('/api/admin/profile-simple', {
+      const response = await fetch('/api/admin/profile-real', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
